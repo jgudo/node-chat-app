@@ -10,16 +10,6 @@
   <h1>Node Chat App</h1>
 
   <script src="/socket.io/socket.io.js"></script>
-  <script>
-    const socket = io();
-
-    socket.on('connect', (socket) => {
-      console.log('Connected to server');
-    });
-
-    socket.on('disconnect', () => {
-      console.log('Disconnected from the server');
-    });
-  </script>
+  <script src="/js/app.js"> </script>
 </body>
 </html>

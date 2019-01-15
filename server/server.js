@@ -24,10 +24,8 @@ io.on('connection', (socket) => {
   });
 
   socket.on('createMessage', (message, fn) => {
-    console.log('New Message ', message);  
-    io.emit('newMessage', generateLocationMessage(message.from, message.text));
+    io.emit('newMessage', generateMessage(message.from, message.text));
     //fn('This is from the server');
-
   });
 
   socket.on('disconnect', () => {

@@ -8,8 +8,14 @@
 </head>
 <body>
   <h1>Node Chat App</h1>
+  <form id="form">
+    <input type="text" name="message" placeholder="Message">
+    <button>Send</button>
+  </form>
 
+  <ul id="messages"></ul>
   <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="/js/app.js"> </script>
 </body>
 </html>

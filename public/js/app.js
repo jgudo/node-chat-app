@@ -1,5 +1,22 @@
 const socket = io();
 
+(function($){
+  $.deparam = $.deparam || function(uri){
+    if(uri === undefined){
+      uri = window.location.search;
+    }
+    var queryString = {};
+    uri.replace(
+      new RegExp(
+        "([^?=&]+)(=([^&#]*))?", "g"),
+        function($0, $1, $2, $3) {
+        	queryString[$1] = decodeURIComponent($3.replace(/\+/g, '%20'));
+        }
+      );
+      return queryString;
+    };
+})(jQuery);
+
 function scrollToBottom() {
   const messages = $('#messages');
   const newMessage = messages.children('li:last-child');
@@ -15,12 +32,33 @@ function scrollToBottom() {
 }
 
 socket.on('connect', () => {
-  console.log('Connected to server');
+  const params = $.deparam(window.location.search);
+
+  socket.emit('join', params, (err) => {
+    if(err) {
+      alert(err);
+      window.location.href = '/';
+    } else {
+      console.log('OK');
+    }
+  });
 
 });
 
 socket.on('disconnect', () => {
   console.log('Disconnected from the server');
+});
+
+socket.on('updateUserList', (users) => {
+  const ul = $('<ul></ul>');
+
+  users.forEach((user) => {
+    ul.append($('<li></li>').text(user));
+  });
+  
+  $('#users').html(ul);
+
+  //console.log('Users list', users);
 });
 
 socket.on('newMessage', (message) => {
@@ -34,13 +72,6 @@ socket.on('newMessage', (message) => {
 
   $('#messages').append(html);
   scrollToBottom();
-  // const time = moment(message.createdAt).format('h:mm a');
-  // console.log(message);
-  // let li = $('<li></li>');
-  // li.text(`${message.from} ${time}: ${message.text} `);
-
-  // $('#messages').append(li);
-
   socket.on('newLocationMessage', (message) => {
     const time = moment(message.createdAt).format('h:mm a');
     const template = $('#location-message-template').html();
@@ -52,25 +83,8 @@ socket.on('newMessage', (message) => {
 
     $('#messages').append(html);
     scrollToBottom();
-    // const li = $('<li></li>');
-    // const link = $('<a target="_blank">View Location</a>');
-
-    // li.text(`From: ${message.from} ${time}`);
-    // link.attr('href', message.url);
-
-    // li.append(link);
-    // $('#messages').append(li);
-
   }); 
 }); 
-
-
-// socket.emit('createMessage', {
-//   from: 'Sira',
-//   text: 'Hi'
-// }, (data) => {
-//   console.log('Got it ', data);
-// });
 
 $('#form').on('submit', (e) => {
   e.preventDefault();

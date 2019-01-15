@@ -7,7 +7,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
-const {generateMessage} = require('./utils/message');
+const {generateMessage, generateLocationMessage} = require('./utils/message');
 
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
@@ -19,9 +19,13 @@ io.on('connection', (socket) => {
   socket.emit('newMessage', generateMessage('Admin', 'Welcome to chat app'));
   socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
   
+  socket.on('createLocationMessage', (coords) => {
+    io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
+  });
+
   socket.on('createMessage', (message, fn) => {
     console.log('New Message ', message);  
-    io.emit('newMessage', generateMessage(message.from, message.text));
+    io.emit('newMessage', generateLocationMessage(message.from, message.text));
     //fn('This is from the server');
 
   });
@@ -29,22 +33,6 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('Client disconnected');
   });
-
-  // socket.emit('newMessage', {
-  //   from: 'jane@doe.com',
-  //   text: 'hoy',
-  //   createdAt: 3643
-  // });
-
-  // socket.on('createEmail', (newEmail) => {
-  //   console.log('Created new email ', newEmail);
-  // });
-
-  // socket.emit('newEmail', {
-  //   from: 'gago@gmail.com',
-  //   text: 'Sira ulo ka',
-  //   createdAt: 1245
-  // });
 });
 
 

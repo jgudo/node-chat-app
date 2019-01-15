@@ -4,59 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Node-CHAT</title>
+  <title>Join | Chat</title>
   <link rel="stylesheet" href="/css/app.css">
 </head>
-<body class="chat">
-  <div class="chat__sidebar">
-    <h3>People</h3>
-    <div id="users">
-
-    </div>
+<body class="centered-form">
+  <div class="centered-form__form">
+    <form action="/chat.html">
+      <div class="form-field">
+        <h3>Join Chat</h3>
+      </div>
+      <div class="form-field">
+        <label for="display">Display Name</label>
+        <input type="text" name="name" id="display" autofocus />
+      </div>
+      <div class="form-field">
+        <label for="room-name">Room Name</label>
+        <input type="text" name="room" id="room-name" />
+      </div>
+      <div class="form-field">
+        <button>Join</button>
+      </div>
+    </form>
   </div>
-
-  <div class="chat__main">
-    <ul id="messages" class="chat__messages"></ul>
-
-    <div class="chat__footer">
-      <form id="form">
-          <input type="text" name="message" placeholder="Message" autofocus autocomplete="off">
-          <button>Send</button>
-        </form>
-      
-        <button id="send-location">Send Location</button>
-    </div>
-    
-    
-  </div>
-  <script id="message-template" type="text/template">
-    <li class="message"> 
-      <div class="message__title">
-        <h4>{{from}}</h4>
-        <span>{{createdAt}}</span>
-      </div>
-      <div class="message__body">
-        <p>{{text}}</p>
-      </div>
-    </li>
-  </script> 
-
-  <script id="location-message-template" type="text/template">
-    <li class="message"> 
-      <div class="message__title">
-        <h4>{{from}}</h4>
-        <span>{{createdAt}}</span>
-      </div>
-      <div class="message__body">
-        <a href="{{url}}" target="_blank">My Current Location</a>
-      </div>
-    </li>
-  </script> 
- 
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/moment@2.23.0/moment.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
-  <script src="/js/app.js"> </script>
 </body>
 </html>

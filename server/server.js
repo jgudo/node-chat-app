@@ -14,7 +14,7 @@ const io = socketIO(server);
 const user = new User();
 
 const publicPath = path.join(__dirname, '../public');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
@@ -37,11 +37,20 @@ io.on('connection', (socket) => {
   });
 
   socket.on('createLocationMessage', (coords) => {
-    io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
+    const activeUser = user.getUser(socket.id);
+    if(user){
+      io.to(activeUser.room).emit('newLocationMessage', generateLocationMessage(activeUser.name, coords.latitude, coords.longitude));
+    }
   });
 
   socket.on('createMessage', (message, fn) => {
-    io.emit('newMessage', generateMessage(message.from, message.text));
+    const activeUser = user.getUser(socket.id);
+
+    if(user && isRealString(message.text)) {
+      io.to(activeUser.room).emit('newMessage', generateMessage(activeUser.name, message.text));
+    }
+
+   
     //fn('This is from the server');
   });
 

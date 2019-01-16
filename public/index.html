@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Join | Chat</title>
-  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/dist/style.css" type="text/css">
 </head>
 <body class="centered-form">
   <div class="centered-form__form">
@@ -14,17 +14,17 @@
         <h3>Join Chat</h3>
       </div>
       <div class="form-field">
-        <label for="display">Display Name</label>
-        <input type="text" name="name" id="display" autofocus />
+        <input type="text" name="name" id="display" placeholder="Display Name" autofocus autocomplete="off" />
       </div>
       <div class="form-field">
-        <label for="room-name">Room Name</label>
-        <input type="text" name="room" id="room-name" />
+        <input type="text" name="room" id="room-name" placeholder="Room Name"/>
       </div>
       <div class="form-field">
         <button>Join</button>
       </div>
     </form>
   </div>
+
+  <script src="/dist/app.bundle.js"></script>
 </body>
 </html>

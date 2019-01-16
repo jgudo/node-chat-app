@@ -1,3 +1,15 @@
+import io from 'socket.io-client';
+import Mustache from 'mustache';
+import WebFont from 'webfontloader';
+import moment from 'moment';
+import './styles/style.scss';
+
+WebFont.load({
+  google: {
+    families: ['Mukta']
+  }
+});
+
 const socket = io();
 
 (function($){
@@ -90,7 +102,6 @@ $('#form').on('submit', (e) => {
   e.preventDefault();
   const input = $('[name="message"]');
   socket.emit('createMessage', {
-    from: 'User',
     text: input.val()
   });
 

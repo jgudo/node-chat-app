@@ -27,6 +27,15 @@ if(document.body.getAttribute('data-id') === 'welcome'){
     previewContainer.appendChild(img);
   });
 
+  joinForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if(joinForm.name.value === '' || joinForm.room.value === '') {
+      alert('Name and Room are required');
+    }else {
+      window.location.href = `/chat.html?name=${joinForm.name.value}&room=${joinForm.room.value}`;
+    }
+  });
+
 }
 
 if(document.body.getAttribute('data-id') === 'chat') {
@@ -175,3 +184,5 @@ if(document.body.getAttribute('data-id') === 'chat') {
     });
   });
 }
+
+// --allow-file-access-from-files

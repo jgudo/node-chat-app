@@ -130,8 +130,9 @@ button:disabled {
 }
 
 .chat__sidebar {
+  padding: 15px 0;
   overflow-y: scroll;
-  width: 260px;
+  width: 300px;
   height: 100vh;
   background: -moz-linear-gradient(125deg, #00c6ff 0%, #0072ff 100%); /* ff3.6+ */
   background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, #0072ff), color-stop(100%, #00c6ff)); /* safari4+,chrome */
@@ -142,7 +143,7 @@ button:disabled {
 }
 
 .chat__sidebar h3 {
-  color: #e6eaee;
+  color: #fff;
   margin: 10px 20px;
   text-align: left;
 }
@@ -152,11 +153,26 @@ button:disabled {
 }
 
 .chat__sidebar li {
-  background: #e6eaee;
-  border: 1px solid #e1e1e1;
   border-radius: 5px;
   padding: 10px;
+  padding-left: 30px;
   margin: 10px;
+  margin-bottom: 0;
+  color: #fff;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: greenyellow;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+  }
 }
 
 .chat__main {

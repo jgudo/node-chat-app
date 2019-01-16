@@ -14,7 +14,7 @@ if(document.body.getAttribute('data-id') === 'welcome'){
   const upload = (fileToUpload) => {
 
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'localhost:8080');
+    xhr.open('POST', 'https://secure-hollows-46774.herokuapp.com/chat.html');
     xhr.setRequestHeader('Content-Type', 'multipart/form-data');
     xhr.send(fileToUpload);
     xhr.onreadystatechange = function(){

@@ -10,24 +10,17 @@ WebFont.load({
   }
 });
 
-const socket = io();
+if(document.body.getAttribute('data-id') === 'chat') {
+  const socket = io();
 
-(function(){
-  $.deparam = $.deparam || function(uri){
-    if(uri === undefined){
-      uri = window.location.search;
-    }
-    var queryString = {};
-    uri.replace(
-      new RegExp(
-        "([^?=&]+)(=([^&#]*))?", "g"),
-        function($0, $1, $2, $3) {
-        	queryString[$1] = decodeURIComponent($3.replace(/\+/g, '%20'));
-        }
-      );
-      return queryString;
-    };
-})();
+function deparam(url){
+  var qs = url.substring(url.indexOf('?') + 1).split('&');
+  for(var i = 0, result = {}; i < qs.length; i++){
+      qs[i] = qs[i].split('=');
+      result[qs[i][0]] = decodeURIComponent(qs[i][1]);
+  }
+  return result;
+}
 
 function getRectangle(obj) {
   var r = { top: 0, left: 0, width: 0, height: 0 };
@@ -73,8 +66,8 @@ function scrollToBottom() {
 }
 
 socket.on('connect', () => {
-  const params = $.deparam(window.location.search);
-
+  const params = deparam(window.location.search);
+  console.log(params);
   socket.emit('join', params, (err) => {
     if(err) {
       alert(err);
@@ -91,68 +84,75 @@ socket.on('disconnect', () => {
 });
 
 socket.on('updateUserList', (users) => {
-  const ul = $('<ul></ul>');
-
-  users.forEach((user) => {
-    ul.append($('<li></li>').text(user));
-  });
+  const ul = document.createElement('ul');
+  const li = document.createElement('li');
   
-  $('#users').html(ul);
+  let template = '';
+  users.forEach((user) => {
+    template += `<li>${user}</li>`;
+  });
+  const html = `<ul>${template}</ul>`;
+  document.getElementById('users').innerHTML = html;
 
   //console.log('Users list', users);
 });
 
 socket.on('newMessage', (message) => {
   const time = moment(message.createdAt).format('h:mm a');
-  const template = $('#message-template').html();
+  const template = document.getElementById('message-template').innerHTML;
   const html = Mustache.render(template, {
     from: message.from,
     text: message.text,
     createdAt: time
   });
 
-  $('#messages').append(html);
+  document.getElementById('messages').insertAdjacentHTML('beforeend', html);
+
   scrollToBottom();
   socket.on('newLocationMessage', (message) => {
     const time = moment(message.createdAt).format('h:mm a');
-    const template = $('#location-message-template').html();
+    const template = document.getElementById('location-message-template').innerHTML;
     const html = Mustache.render(template, {
       from: message.from,
       url: message.url,
       createdAt: time
     });
 
-    $('#messages').append(html);
+    document.getElementById('messages').insertAdjacentHTML('beforeend', html);
     scrollToBottom();
   }); 
 }); 
 
-$('#form').on('submit', (e) => {
+document.getElementById('form').addEventListener('submit', (e) => {
   e.preventDefault();
-  const input = $('[name="message"]');
+  const input = document.querySelector('input[name="message"]');
   socket.emit('createMessage', {
-    text: input.val()
+    text: input.value
   });
 
-  input.val('');
+  input.value = '';
 });
 
-const locationButton = $('#send-location');
+const locationButton = document.getElementById('send-location');
 
-locationButton.on('click', () => {
+locationButton.addEventListener('click', () => {
   if(!navigator.geolocation) {
     return alert('Geolocation not supported by your browser');
   }
-  locationButton.attr('disabled', 'disabled').text('Sending Location...');
+  locationButton.disabled = true;
+  locationButton.textContent = 'Sending Location...';
 
   navigator.geolocation.getCurrentPosition((pos) => {
-    locationButton.removeAttr('disabled').text('Send Location');
+    locationButton.disabled = false;
+    locationButton.textContent = 'Send Location';
     socket.emit('createLocationMessage', {
       latitude: pos.coords.latitude,
       longitude: pos.coords.longitude
     });
   }, () => {
-    locationButton.removeAttr('disabled').text('Send Location');
+    locationButton.disabled = false;
+    locationButton.textContent = 'Send Location';
     alert('Unable to fetch location');
   });
 });
+}

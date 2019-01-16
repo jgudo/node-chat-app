@@ -9,7 +9,7 @@
 </head>
 <body class="centered-form" data-id="welcome">
   <div class="centered-form__form">
-    <form action="/chat.html">
+    <form action="/chat.html" id="join">
       <div class="form-field">
         <h3>Join Chat</h3>
       </div>
@@ -18,6 +18,14 @@
       </div>
       <div class="form-field">
         <input type="text" name="room" id="room-name" placeholder="Room Name"/>
+      </div>
+      <div class="form-field avatar">
+        <label for="file"><span>Choose Avatar</span></label>
+        <input type="file" id="file">
+        <div class="preview">
+            <img src="/img/user.svg" alt="">
+        </div>
+      
       </div>
       <div class="form-field">
         <button>Join</button>

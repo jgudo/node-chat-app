@@ -77,20 +77,47 @@ button:disabled {
 
 .form-field {
   margin: 20px 0;
+  display: flex;
 }
 
 .form-field > * {
   width: 100%;
 }
 
+.form-field .avatar {
+  justify-content: space-between;
+  align-items: center;
+}
+
 .form-field label {
-  display: block;
+  display: inline-block;
   margin-bottom: 7px;
+  color: #1a1a1a;
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  span {
+    padding: 10px 25px;
+  }
+}
+
+.form-field  img, 
+.preview {
+  width: 70px;
+  height: 70px;
 }
 
 .form-field input, .form-field select {
   border: 1px solid #e1e1e1;
   padding: 15px;
+}
+
+#file {
+  display: none;
 }
 
 .chat {

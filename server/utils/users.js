@@ -1,9 +1,9 @@
 class User {
-  constructor(id, name,  room) {
+  constructor() {
     this.users = [];
   }
-  addUser(id, name, room) {
-    const user = {id, name, room};
+  addUser(id, name, room, avatar) {
+    const user = {id, name, room, avatar};
     this.users.push(user);
     return user;
   }

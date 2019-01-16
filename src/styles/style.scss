@@ -111,6 +111,11 @@ button:disabled {
   height: 70px;
 }
 
+.form-field img {
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 .form-field input, .form-field select {
   border: 1px solid #e1e1e1;
   padding: 15px;

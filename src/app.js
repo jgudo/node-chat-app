@@ -11,22 +11,6 @@ WebFont.load({
 });
 
 if(document.body.getAttribute('data-id') === 'welcome'){
-  const upload = (fileToUpload) => {
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://secure-hollows-46774.herokuapp.com/chat.html');
-    xhr.setRequestHeader('Content-Type', 'multipart/form-data');
-    xhr.send(fileToUpload);
-    xhr.onreadystatechange = function(){
-        if(xhr.readyState != 4) return;
-        if(xhr.status != 200){
-            alert("Status: " + xhr.status);
-        }else{
-            alert(xhr.responseText);
-        }
-    };
-  };
-
   const joinForm = document.getElementById('join');
   const inputFile = document.getElementById('file');
   const previewContainer = document.querySelector('.preview');
@@ -43,13 +27,6 @@ if(document.body.getAttribute('data-id') === 'welcome'){
     previewContainer.appendChild(img);
   });
 
-  joinForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('file', file);
-
-    upload(formData);
-  });
 }
 
 if(document.body.getAttribute('data-id') === 'chat') {

@@ -3,6 +3,7 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const {generateMessage, generateLocationMessage} = require('./utils/message');
 const {isRealString} = require('./utils/validation');
 const {User} = require('./utils/users');
@@ -67,7 +68,6 @@ io.on('connection', (socket) => {
     console.log('Client disconnected');
   });
 });
-
 
 server.listen(port, () => {
   console.log('Server is running on port ', port);

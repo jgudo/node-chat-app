@@ -16,7 +16,7 @@ const user = new User();
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 8080;
 
-app.user(cors());
+app.use(cors());
 app.use(express.static(publicPath));
 
 

@@ -12,7 +12,7 @@ WebFont.load({
 
 const socket = io();
 
-(function($){
+(function(){
   $.deparam = $.deparam || function(uri){
     if(uri === undefined){
       uri = window.location.search;
@@ -27,19 +27,48 @@ const socket = io();
       );
       return queryString;
     };
-})(jQuery);
+})();
+
+function getRectangle(obj) {
+  var r = { top: 0, left: 0, width: 0, height: 0 };
+
+  if(!obj)
+     return r;
+
+  else if(typeof obj == "string")
+     obj = document.getElementById(obj);
+
+  if(typeof obj != "object")
+     return r;
+
+  if(typeof obj.offsetTop != "undefined") {
+
+     r.height = parseInt(obj.offsetHeight);
+     r.width  = parseInt(obj.offsetWidth);
+     r.left = r.top = 0;
+
+     while(obj && obj.tagName != "BODY") {
+
+        r.top  += parseInt(obj.offsetTop);
+        r.left += parseInt(obj.offsetLeft);
+
+        obj = obj.offsetParent;
+     }
+  }
+  return r;
+}
 
 function scrollToBottom() {
-  const messages = $('#messages');
-  const newMessage = messages.children('li:last-child');
-  const clientHeight = messages.prop('clientHeight');
-  const scrollTop = messages.prop('scrollTop');
-  const scrollHeight = messages.prop('scrollHeight');
-  const newMessageHeight = newMessage.innerHeight();
-  const lastMessageHeight = newMessage.prev().innerHeight();
+  const messages = document.getElementById('messages');
+  const newMessage = messages.lastElementChild;
+  const clientHeight = messages.clientHeight;
+  const scrollTop = messages.scrollTop;
+  const scrollHeight = messages.scrollHeight;
+  const newMessageHeight = getRectangle(newMessage).height;
+  const lastMessageHeight = getRectangle(newMessage.previousElementSibling).height;
 
   if(clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
-    messages.scrollTop(scrollHeight);
+    messages.scrollTop = scrollHeight;
   }
 }
 

@@ -31,18 +31,37 @@ h3 {
   font-size: 1.5rem;
 }
 
+
+%gradient {
+  background: -moz-linear-gradient(125deg, #00c6ff 0%, #0072ff 100%); /* ff3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, #0072ff), color-stop(100%, #00c6ff)); /* safari4+,chrome */
+  background: -webkit-linear-gradient(125deg, #00c6ff 0%, #0072ff 100%); /* safari5.1+,chrome10+ */
+  background: -o-linear-gradient(125deg, #00c6ff 0%, #0072ff 100%); /* opera 11.10+ */
+  background: -ms-linear-gradient(125deg, #00c6ff 0%, #0072ff 100%); /* ie10+ */
+  background: linear-gradient(325deg, #00c6ff 0%, #0072ff 100%); /* w3c */
+}
+
+%gradient-hover {
+  background: -moz-linear-gradient(125deg, #0072ff 0%, #00c6ff 100%); /* ff3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, #0072ff), color-stop(100%, #00c6ff)); /* safari4+,chrome */
+  background: -webkit-linear-gradient(125deg, #0072ff 0%, #00c6ff 100%); /* safari5.1+,chrome10+ */
+  background: -o-linear-gradient(125deg, #0072ff 0%, #00c6ff 100%); /* opera 11.10+ */
+  background: -ms-linear-gradient(125deg, #0072ff 0%, #00c6ff 100%); /* ie10+ */
+  background: linear-gradient(325deg#0072ff 0%, #00c6ff 100%); /* w3c */
+}
+
 button {
   border: none;
-  background: #265f82;
+  @extend %gradient;
   color: white;
   cursor: pointer;
   padding: 15px;
-  transition: background .3s ease;
+  transition: all .3s ease;
 }
 
-button:hover {
+button:active {
   border: none;
-  background: #1F4C69;
+  @extend %gradient-hover;
   color: white;
 }
 
@@ -129,17 +148,13 @@ button:disabled {
   display: flex;
 }
 
+
 .chat__sidebar {
   padding: 15px 0;
   overflow-y: scroll;
   width: 300px;
   height: 100vh;
-  background: -moz-linear-gradient(125deg, #00c6ff 0%, #0072ff 100%); /* ff3.6+ */
-  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, #0072ff), color-stop(100%, #00c6ff)); /* safari4+,chrome */
-  background: -webkit-linear-gradient(125deg, #00c6ff 0%, #0072ff 100%); /* safari5.1+,chrome10+ */
-  background: -o-linear-gradient(125deg, #00c6ff 0%, #0072ff 100%); /* opera 11.10+ */
-  background: -ms-linear-gradient(125deg, #00c6ff 0%, #0072ff 100%); /* ie10+ */
-  background: linear-gradient(325deg, #00c6ff 0%, #0072ff 100%); /* w3c */
+  @extend %gradient;
 }
 
 .chat__sidebar h3 {
